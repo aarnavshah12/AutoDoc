@@ -107,6 +107,7 @@ async function Document(code){
     }
 }
 
+
 /**
  * Function to extract code from the response text
  * @param {string} responseText - The response text containing the code block
