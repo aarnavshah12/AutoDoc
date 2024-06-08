@@ -143,6 +143,23 @@ async function processFileDocument(filePath){
         throw error;
     }
 }
+async function getFiles(dirPath){
+    const files = [];
+    const directoryContents = fs.readdirSync(dirPath);
+  
+    for (const item of directoryContents) {
+      const itemPath = path.join(dirPath, item);
+      const fileType = itemPath.split(".")[1]
+      if (fs.statSync(itemPath).isDirectory() && fileType !== "png" && fileType !== "jpg" && fileType !== "jpeg") {
+        files.push(...getFiles(itemPath)); // Recursively call for subdirectories
+      } else {
+        files.push(itemPath); // Add file paths to the results
+      }
+    }
+  
+    console.log(files)
+    return files
+}
 module.exports = {
     processFile,
     processFileDocument,
