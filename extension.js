@@ -1,6 +1,6 @@
 const vscode = require('vscode');
 const fileProcessing = require('./libraries/fileProcessing.js');
-const terminalUtils = require('./libraries/terminalUtils.mjs');
+const fs = require('fs');const terminalUtils = require('./libraries/terminalUtils.mjs');
 
 const fs = require('fs');
 /**
@@ -88,39 +88,10 @@ function activate(context) {
             vscode.window.showInformationMessage('No active editor found!');
         }
     })
-    const DocGenCurrDir = vscode.commands.registerCommand("autodoc.DocumentCurrentDir",async function(){
-        const editor = vscode.window.activeTextEditor;
-        if(editor) {
-            let filePath = editor.document.fileName
-
-            try {
-                const both = await fileProcessing.getFiles(filePath);
-                const files = both[0]
-                const dirRef = both[1]+"/docs"
-                const len = files.length
-                await fs.mkdir(dirRef, (err) => {
-                    if (err) {
-                      console.error('Error creating directory:', err);
-                    } else {
-                      console.log('Directory created successfully!');
-                    }
-                  });
-                for(let i = 0; i<len;i++){
-                    await fileProcessing.processFileDocumentFolder(files[i]);
-                    
-                }
-                vscode.window.showInformationMessage('File has been Documented successfully!');
-            } catch (error) {
-                vscode.window.showErrorMessage('Error Documenting the file: ' + error.message);
-            }
-        } else {
-            vscode.window.showInformationMessage('No active editor found!');
-        }
-    })
-    context.subscriptions.push(commentThisFile);
-    context.subscriptions.push(documentCode);
-    context.subscriptions.push(analyzeThisFile);
-    context.subscriptions.push(documentThisFile);
+context.subscriptions.push(commentThisFile);
+context.subscriptions.push(documentCode);
+context.subscriptions.push(analyzeThisFile);
+context.subscriptions.push(documentThisFile);
 }
 // This method is called when your extension is deactivated
 function deactivate() {}
