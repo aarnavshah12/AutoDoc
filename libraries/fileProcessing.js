@@ -53,8 +53,6 @@ async function getCommentedCode(code, fileType) {
         const prompt = `Here is a ${fileType} file. Please add appropriate code comments to it.
         DO NOT CHANGE (DO NOT DELETE, MODIFY, CORRECT OR ADD) THE CODE, YOU ARE ONLY ADDING 
         CODE COMMENTS (where applicable). Please DO NOT include the language name at the top of the response:\n\n${code}`;
-        DO NOT CHANGE (DO NOT DELETE, MODIFY, CORRECT OR ADD) THE CODE, YOU ARE ONLY ADDING 
-        CODE COMMENTS (where applicable). Please DO NOT include the language name at the top of the response:\n\n${code}`;
         const response = await axios.post(
             'https://api.openai.com/v1/chat/completions',
             {
@@ -231,12 +229,29 @@ async function processFileDocumentFolder(filePath) {
         throw error;
     }
 }
+async function getFiles(dirPath){
+    const files = [];
+    const directoryContents = fs.readdirSync(dirPath);
+  
+    for (const item of directoryContents) {
+      const itemPath = path.join(dirPath, item);
+      const fileType = itemPath.split(".")[1]
+      if (fs.statSync(itemPath).isDirectory() && fileType !== "png" && fileType !== "jpg" && fileType !== "jpeg") {
+        files.push(...await getFiles(itemPath)); // Recursively call for subdirectories
+      } else {
+        files.push(itemPath); // Add file paths to the results
+      }
+    }
+  
+    console.log(files)
+    return files
+}
 
 // Export the functions for use in other modules
 module.exports = {
     processFile,
     processFileDocument,
-    processFileDocumentFolder,
     Document,
     writeFile,
+    processFileDocumentFolder
 };
