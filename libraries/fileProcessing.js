@@ -59,15 +59,19 @@ async function getCommentedCode(code, fileType) {
     }
 }
 
+
 // Function to extract code from the response text
 function extractCode(responseText) {
-    const codeStartIndex = responseText.indexOf("```") + 3;
+    // Look for the start and end of the code block
+    const codeStartIndex = responseText.indexOf("```");
     const codeEndIndex = responseText.lastIndexOf("```");
-    
+
     if (codeStartIndex !== -1 && codeEndIndex !== -1 && codeStartIndex < codeEndIndex) {
-        return responseText.substring(codeStartIndex, codeEndIndex).trim();
+        // Extract the code block without the triple backticks
+        return responseText.substring(codeStartIndex + 3, codeEndIndex).trim();
     }
-    return responseText.trim();  // Fallback in case the expected code block is not found
+    // If code block delimiters are not found, return the text as is
+    return responseText.trim();
 }
 
 // Main function to process the file
