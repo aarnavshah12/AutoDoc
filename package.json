@@ -26,8 +26,8 @@
         "title": "AutoDoc: Document This File"
       },
       {
-        "command": "autodoc.CommentCodeBase",
-        "title": "AutoDoc: Comment Code Base"
+        "command": "autodoc.CommentCurrentDir",
+        "title": "AutoDoc: Comment Current Directory"
       }
     ]
   },
