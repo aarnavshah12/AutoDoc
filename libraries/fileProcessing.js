@@ -1,4 +1,5 @@
 // Import the necessary modules
+// Import the necessary modules
 const fs = require('fs');
 const axios = require('axios');
 const path = require('path');
@@ -165,10 +166,11 @@ async function processFile(filePath) {
  */
 async function processFileDocument(filePath) {
     try {
+        
         const fileContent = await readFile(filePath);
-        const output = await Document(fileContent);
-        const outputFilePath = filePath.split(".")[0] + ".md"; // Create a markdown file with the same name
-        console.log(output);
+        const output = await Document(fileContent)
+        const outputFilePath = await (filePath.split(".")[0]+".md")
+        console.log(output)
         await writeFile(outputFilePath, output);
 
         console.log(`Processed file saved as ${outputFilePath}`);
@@ -204,43 +206,7 @@ async function getFiles(dirPath) {
             files.push(itemPath); // Add file paths to the results
         }
     }
-
-    // @ts-ignore
-    return [files,dirPath];
-}
-async function processFileDocumentFolder(filePath) {
-    try {
-        const fileContent = await readFile(filePath);
-        const output = await Document(fileContent);
-        let outputFilePath = filePath.split("/")
-        const docName = outputFilePath.pop()
-        outputFilePath= outputFilePath.join("/")
-        outputFilePath = outputFilePath + "/docs/" + docName
-        outputFilePath = outputFilePath.split(".")[0] + ".md"; // Create a markdown file with the same name
-        await writeFile(outputFilePath, output);
-
-        console.log(`Processed file saved as ${outputFilePath}`);
-    } catch (error) {
-        console.error('Error processing the file:', error);
-        throw error;
-    }
-}
-async function getFiles(dirPath){
-    const files = [];
-    const directoryContents = fs.readdirSync(dirPath);
-  
-    for (const item of directoryContents) {
-      const itemPath = path.join(dirPath, item);
-      const fileType = itemPath.split(".")[1]
-      if (fs.statSync(itemPath).isDirectory() && fileType !== "png" && fileType !== "jpg" && fileType !== "jpeg") {
-        files.push(...getFiles(itemPath)); // Recursively call for subdirectories
-      } else {
-        files.push(itemPath); // Add file paths to the results
-      }
-    }
-  
-    console.log(files)
-    return files
+    return files;
 }
 async function getFiles(dirPath){
     const files = [];
