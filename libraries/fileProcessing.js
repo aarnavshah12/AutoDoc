@@ -53,6 +53,8 @@ async function getCommentedCode(code, fileType) {
         const prompt = `Here is a ${fileType} file. Please add appropriate code comments to it.
         DO NOT CHANGE (DO NOT DELETE, MODIFY, CORRECT OR ADD) THE CODE, YOU ARE ONLY ADDING 
         CODE COMMENTS (where applicable). Please DO NOT include the language name at the top of the response:\n\n${code}`;
+        DO NOT CHANGE (DO NOT DELETE, MODIFY, CORRECT OR ADD) THE CODE, YOU ARE ONLY ADDING 
+        CODE COMMENTS (where applicable). Please DO NOT include the language name at the top of the response:\n\n${code}`;
         const response = await axios.post(
             'https://api.openai.com/v1/chat/completions',
             {
@@ -127,7 +129,7 @@ function extractCode(responseText) {
         
         // Split the code block by newlines and remove the first line
         const codeLines = codeBlock.split('\n');
-        codeLines.shift(); // Remove the first line
+        //codeLines.shift(); // Remove the first line
 
         // Join the remaining lines back into a single string
         return codeLines.join('\n').trim();

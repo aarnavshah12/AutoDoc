@@ -83,7 +83,7 @@ function activate(context) {
                 }
                 vscode.window.showInformationMessage('File has been Documented successfully!');
             } catch (error) {
-                vscode.window.showErrorMessage('Error Documenting the file: ' + error.message);
+                vscode.window.showErrorMessage('Error documenting the file: ' + error.message);
             }
         } else {
             vscode.window.showInformationMessage('No active editor found!');
