@@ -18,8 +18,16 @@
         "title": "AutoDoc: Document Code"
       },
       {
-        "command": "autodoc.documentThisFile",
+        "command": "autodoc.CommentThisFile",
+        "title": "AutoDoc: Comment This File"
+      },
+      {
+        "command": "autodoc.DocumentThisFile",
         "title": "AutoDoc: Document This File"
+      },
+      {
+        "command": "autodoc.CommentCodeBase",
+        "title": "AutoDoc: Comment Code Base"
       }
     ]
   },

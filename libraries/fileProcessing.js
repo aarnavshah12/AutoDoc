@@ -52,6 +52,7 @@ async function getCommentedCode(code, fileType) {
         );
         const newCode = extractCode(response.data.choices[0].message.content);
         console.log(newCode);
+        
         return newCode;
     } catch (error) {
         console.error('Error:', error.message);
@@ -60,6 +61,31 @@ async function getCommentedCode(code, fileType) {
 }
 
 
+async function Document(code){
+    try{
+        const prompt = `Generate a github style documentation in markdown based on: ${code}`
+        const response = await axios.post(
+            'https://api.openai.com/v1/chat/completions',
+            {
+                model: 'gpt-4o',
+                messages: [{ role: 'user', content: prompt }],
+                max_tokens: 1500,
+                temperature: 0.7,
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${API_KEY}`
+                }
+            }
+        );
+        return response.data["choices"][0]["message"]["content"]
+    }
+    catch (error){
+        console.error("Error:", error.message)
+        return null
+    }
+}
 // Function to extract code from the response text
 function extractCode(responseText) {
     // Look for the start and end of the code block
@@ -80,7 +106,9 @@ async function processFile(filePath) {
         const fileExtension = path.extname(filePath).substring(1);
         const fileContent = await readFile(filePath);
         const commentedCode = await getCommentedCode(fileContent, fileExtension);
-        const outputFilePath = path.join(path.dirname(filePath), `commented_${path.basename(filePath)}`);
+        // const outputFilePath = path.join(path.dirname(filePath), `commented_${path.basename(filePath)}`);
+        // I think we want it to comment on the existing file 
+        const outputFilePath = filePath
         await writeFile(outputFilePath, commentedCode);
 
         console.log(`Processed file saved as ${outputFilePath}`);
@@ -89,7 +117,22 @@ async function processFile(filePath) {
         throw error;
     }
 }
+async function processFileDocument(filePath){
+    try {
+        
+        const fileContent = await readFile(filePath);
+        const output = await Document(fileContent)
+        const outputFilePath = await (filePath.split(".")[0]+".md")
+        console.log(output)
+        await writeFile(outputFilePath, output);
 
+        console.log(`Processed file saved as ${outputFilePath}`);
+    } catch (error) {
+        console.error('Error processing the file:', error);
+        throw error;
+    }
+}
 module.exports = {
-    processFile
+    processFile,
+    processFileDocument
 };
