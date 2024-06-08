@@ -10,6 +10,7 @@ function activate(context) {
     console.log('Congratulations, your extension "autodoc" is now active!');
 
     const commentThisFile = vscode.commands.registerCommand('autodoc.CommentThisFile', async function () {
+    const commentThisFile = vscode.commands.registerCommand('autodoc.CommentThisFile', async function () {
         const editor = vscode.window.activeTextEditor;
 
         if (editor) {
@@ -17,7 +18,9 @@ function activate(context) {
             try {
                 await fileProcessing.processFile(filePath);
                 vscode.window.showInformationMessage('File has been commented successfully!');
+                vscode.window.showInformationMessage('File has been commented successfully!');
             } catch (error) {
+                vscode.window.showErrorMessage('Error commenting the file: ' + error.message);
                 vscode.window.showErrorMessage('Error commenting the file: ' + error.message);
             }
         } else {
@@ -29,7 +32,6 @@ function activate(context) {
         vscode.window.showInformationMessage('Documenting code!');
     });
 
-    
     const analyzeThisFile = vscode.commands.registerCommand('autodoc.analyzeThisFile', async function () {
         const editor = vscode.window.activeTextEditor;
         if (editor) {
@@ -64,7 +66,9 @@ function activate(context) {
             try {
                 await fileProcessing.processFileDocument(filePath);
                 vscode.window.showInformationMessage('File has been documented successfully!');
+                vscode.window.showInformationMessage('File has been documented successfully!');
             } catch (error) {
+                vscode.window.showErrorMessage('Error documenting the file: ' + error.message);
                 vscode.window.showErrorMessage('Error documenting the file: ' + error.message);
             }
         } else {
@@ -122,6 +126,10 @@ function activate(context) {
             vscode.window.showInformationMessage('No active editor found!');
         }
     })
+    context.subscriptions.push(commentThisFile);
+    context.subscriptions.push(documentCode);
+    context.subscriptions.push(analyzeThisFile);
+    context.subscriptions.push(documentThisFile);
 }
 
 // This method is called when your extension is deactivated

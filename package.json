@@ -36,6 +36,10 @@
       {
         "command": "autodoc.DocumentCurrentDir",
         "title": "AutoDoc: Document Current Directory"
+      },
+      {
+        "command": "autodoc.analyzeThisFile",
+        "title": "AutoDoc: Analyze This File"
       }
     ]
   },
