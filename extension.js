@@ -26,6 +26,7 @@ function activate(context) {
     const documentCode = vscode.commands.registerCommand('autodoc.documentCode', function () {
         vscode.window.showInformationMessage('Documenting code!');
     });
+    
     const DocumentThisFile = vscode.commands.registerCommand('autodoc.DocumentThisFile', async function () {
         const editor = vscode.window.activeTextEditor;
         if(editor) {
