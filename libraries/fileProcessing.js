@@ -109,6 +109,7 @@ async function Document(code, analysis){
 }
 
 
+
 /**
  * Function to extract code from the response text
  * @param {string} responseText - The response text containing the code block
@@ -133,6 +134,7 @@ function extractCode(responseText) {
     // If code block delimiters are not found, return the text as is
     return responseText.trim();
 }
+
 
 
 

@@ -28,6 +28,7 @@ function activate(context) {
         vscode.window.showInformationMessage('Documenting code!');
     });
 
+    
     const analyzeThisFile = vscode.commands.registerCommand('autodoc.analyzeThisFile', async function () {
         const editor = vscode.window.activeTextEditor;
         if (editor) {
