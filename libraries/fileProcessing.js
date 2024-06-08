@@ -36,7 +36,7 @@ async function getCommentedCode(code, fileType) {
     const prompt = `Here is a ${fileType} file. Please add appropriate code comments to it.\n\n${code}`;
 
     const response = await axios.post(
-        'https://api.openai.com/v1/engines/gpt-4/completions',
+        'https://api.openai.com/v1/chat/completions',
         {
             prompt: prompt,
             max_tokens: 1500,
