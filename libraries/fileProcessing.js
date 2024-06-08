@@ -33,26 +33,41 @@ function writeFile(filePath, content) {
 
 // Function to send code to ChatGPT and receive the response
 async function getCommentedCode(code, fileType) {
-    const prompt = `Here is a ${fileType} file. Please add appropriate code comments to it.\n\n${code}`;
-
-    const response = await axios.post(
-        'https://api.openai.com/v1/chat/completions',
-        {
-            prompt: prompt,
-            max_tokens: 1500,
-            n: 1,
-            stop: null,
-            temperature: 0.7,
-        },
-        {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${API_KEY}`
+    try {
+        const prompt = `Here is a ${fileType} file. Please add appropriate code comments to it.\n\n${code}`;
+        const response = await axios.post(
+            'https://api.openai.com/v1/chat/completions',
+            {
+                model: 'gpt-4o',
+                messages: [{ role: 'user', content: prompt }],
+                max_tokens: 1500,
+                temperature: 0.7,
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${API_KEY}`
+                }
             }
-        }
-    );
-    console.log(response.data.choices[0].text)
-    return response.data.choices[0].text;
+        );
+        const newCode = extractCode(response.data.choices[0].message.content);
+        console.log(newCode);
+        return newCode;
+    } catch (error) {
+        console.error('Error:', error.message);
+        return null;
+    }
+}
+
+// Function to extract code from the response text
+function extractCode(responseText) {
+    const codeStartIndex = responseText.indexOf("```") + 3;
+    const codeEndIndex = responseText.lastIndexOf("```");
+    
+    if (codeStartIndex !== -1 && codeEndIndex !== -1 && codeStartIndex < codeEndIndex) {
+        return responseText.substring(codeStartIndex, codeEndIndex).trim();
+    }
+    return responseText.trim();  // Fallback in case the expected code block is not found
 }
 
 // Main function to process the file
@@ -60,10 +75,8 @@ async function processFile(filePath) {
     try {
         const fileExtension = path.extname(filePath).substring(1);
         const fileContent = await readFile(filePath);
-
         const commentedCode = await getCommentedCode(fileContent, fileExtension);
-
-        const outputFilePath = `commented_${path.basename(filePath)}`;
+        const outputFilePath = path.join(path.dirname(filePath), `commented_${path.basename(filePath)}`);
         await writeFile(outputFilePath, commentedCode);
 
         console.log(`Processed file saved as ${outputFilePath}`);
