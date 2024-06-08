@@ -1,8 +1,7 @@
 const vscode = require('vscode');
 const fileProcessing = require('./libraries/fileProcessing.js');
-const fs = require('fs');const terminalUtils = require('./libraries/terminalUtils.mjs');
-
 const fs = require('fs');
+const terminalUtils = require('./libraries/terminalUtils.mjs');
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -75,6 +74,7 @@ function activate(context) {
         if(editor) {
             let filePath = editor.document.fileName
             try {
+                // @ts-ignore
                 const files = await fileProcessing.getFiles(filePath)[0];
                 const len = files.length
                 for(let i = 0; i<len;i++){
