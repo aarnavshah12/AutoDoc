@@ -1,6 +1,6 @@
 const vscode = require('vscode');
 const fileProcessing = require('./libraries/fileProcessing.js');
-const terminalUtils = require('./libraries/terminalUtils.mjs');
+const fs = require('fs');const terminalUtils = require('./libraries/terminalUtils.mjs');
 
 const fs = require('fs');
 /**

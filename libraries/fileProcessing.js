@@ -206,7 +206,26 @@ async function getFiles(dirPath) {
             files.push(itemPath); // Add file paths to the results
         }
     }
-    return files;
+
+    // @ts-ignore
+    return [files,dirPath];
+}
+async function processFileDocumentFolder(filePath) {
+    try {
+        const fileContent = await readFile(filePath);
+        const output = await Document(fileContent);
+        let outputFilePath = filePath.split("/")
+        const docName = outputFilePath.pop()
+        outputFilePath= outputFilePath.join("/")
+        outputFilePath = outputFilePath + "/docs/" + docName
+        outputFilePath = outputFilePath.split(".")[0] + ".md"; // Create a markdown file with the same name
+        await writeFile(outputFilePath, output);
+
+        console.log(`Processed file saved as ${outputFilePath}`);
+    } catch (error) {
+        console.error('Error processing the file:', error);
+        throw error;
+    }
 }
 async function getFiles(dirPath){
     const files = [];
@@ -230,6 +249,7 @@ async function getFiles(dirPath){
 module.exports = {
     processFile,
     processFileDocument,
+    processFileDocumentFolder,
     Document,
     writeFile,,
     processFileDocumentFolder
