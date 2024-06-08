@@ -28,6 +28,10 @@
       {
         "command": "autodoc.CommentCodeBase",
         "title": "AutoDoc: Comment Code Base"
+      },
+      {
+        "command": "autodoc.analyzeThisFile",
+        "title": "AutoDoc: Analyze This File"
       }
     ]
   },
@@ -47,6 +51,8 @@
   },
   "dependencies": {
     "axios": "^1.7.2",
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.23",
     "openai": "^4.49.1"
   }
 }
