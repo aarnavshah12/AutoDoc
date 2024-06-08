@@ -131,7 +131,6 @@ function activate(context) {
     context.subscriptions.push(analyzeThisFile);
     context.subscriptions.push(documentThisFile);
 }
-
 // This method is called when your extension is deactivated
 function deactivate() {}
 
