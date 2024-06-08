@@ -40,8 +40,20 @@ function activate(context) {
             vscode.window.showInformationMessage('No active editor found!');
         }
     })
-    // const CommentCodeBase = vscode.commands.registerCommand("autodoc.CommentCodeBase")
-    // context.subscriptions.push();
+    const CommentCodeBase = vscode.commands.registerCommand("autodoc.CommentCodeBase",async function(){
+        const editor = vscode.window.activeTextEditor;
+        if(editor) {
+            const filePath = editor.document.fileName;
+            try {
+                await fileProcessing.getFiles("/home/lloliva/Coding/Projects/JamHacks8/AutoDoc/libraries");
+                vscode.window.showInformationMessage('File has been Documented successfully!');
+            } catch (error) {
+                vscode.window.showErrorMessage('Error Documenting the file: ' + error.message);
+            }
+        } else {
+            vscode.window.showInformationMessage('No active editor found!');
+        }
+    })
 }
 
 // This method is called when your extension is deactivated
