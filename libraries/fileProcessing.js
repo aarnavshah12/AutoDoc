@@ -37,7 +37,7 @@ async function getFiles(dirPath){
     for (const item of directoryContents) {
       const itemPath = path.join(dirPath, item);
       const fileType = itemPath.split(".")[1]
-      if (fs.statSync(itemPath).isDirectory() && fileType !== "png" && fileType !== "jpg" && fileType !== "jpeg") {
+      if (fs.statSync(itemPath).isDirectory() && fileType !== "png" && fileType !== "jpg" && fileType !== "jpeg" && fileType !== "gitignore") {
         files.push(... await getFiles(itemPath)); // Recursively call for subdirectories
       } else {
         files.push(itemPath); // Add file paths to the results
@@ -123,10 +123,9 @@ function extractCode(responseText) {
     if (codeStartIndex !== -1 && codeEndIndex !== -1 && codeStartIndex < codeEndIndex) {
         // Extract the code block without the triple backticks
         const codeBlock = responseText.substring(codeStartIndex + 3, codeEndIndex).trim();
-        
+
         // Split the code block by newlines and remove the first line
         const codeLines = codeBlock.split('\n');
-        //codeLines.shift(); // Remove the first line
         //codeLines.shift(); // Remove the first line
 
         // Join the remaining lines back into a single string
@@ -166,11 +165,29 @@ async function processFileDocument(filePath){
         throw error;
     }
 }
+async function processFileDocumentFolder(filePath) {
+        try {
+            const fileContent = await readFile(filePath);
+            const output = await Document(fileContent);
+            let outputFilePath = filePath.split("/")
+            const docName = outputFilePath.pop()
+            outputFilePath= outputFilePath.join("/")
+            outputFilePath = outputFilePath + "/docs/" + docName
+            outputFilePath = outputFilePath.split(".")[0] + ".md"; // Create a markdown file with the same name
+            await writeFile(outputFilePath, output);
+    
+            console.log(`Processed file saved as ${outputFilePath}`);
+        } catch (error) {
+            console.error('Error processing the file:', error);
+            throw error;
+        }
+    }
 module.exports = {
     processFile,
     processFileDocument,
     getFiles,
     getDir,
     getCommentedCode,
-    writeFile
+    writeFile,
+    processFileDocumentFolder,
 };

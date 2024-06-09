@@ -28,6 +28,10 @@
       {
         "command": "autodoc.CommentCurrDir",
         "title": "AutoDoc: Comment Current Directory"
+      },
+      {
+        "command": "autodoc.DocumentCurrentDir",
+        "title": "AutoDoc: Document Current Directory"
       }
     ]
   },

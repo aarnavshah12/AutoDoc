@@ -61,6 +61,34 @@ function activate(context) {
             vscode.window.showInformationMessage('No active editor found!');
         }
     })
+    const DocGenCurrDir = vscode.commands.registerCommand("autodoc.DocumentCurrentDir",async function(){
+        const editor = vscode.window.activeTextEditor;
+        if(editor) {
+            let filePath = editor.document.fileName
+
+            try {
+                const files = await fileProcessing.getFiles(await fileProcessing.getDir(filePath));
+                const dirRef = await fileProcessing.getDir(filePath)+"/docs"
+                const len = files.length
+                await fs.mkdir(dirRef, (err) => {
+                    if (err) {
+                      console.error('Error creating directory:', err);
+                    } else {
+                      console.log('Directory created successfully!');
+                    }
+                  });
+                for(let i = 0; i<len;i++){
+                    await fileProcessing.processFileDocumentFolder(files[i]);
+
+                }
+                vscode.window.showInformationMessage('File has been Documented successfully!');
+            } catch (error) {
+                vscode.window.showErrorMessage('Error Documenting the file: ' + error.message);
+            }
+        } else {
+            vscode.window.showInformationMessage('No active editor found!');
+        }
+    })
 }
 
 // This method is called when your extension is deactivated
