@@ -173,7 +173,7 @@ async function processFileDocumentFolder(filePath,DocPath) {
             const docName = outputFilePath.pop()
             outputFilePath= outputFilePath.join("/")
             outputFilePath = DocPath+"/" + docName
-            outputFilePath = outputFilePath.split(".")[0] + ".md"; // Create a markdown file with the same name
+            outputFilePath = outputFilePath.split(".")[0] + ".md"; 
             await writeFile(outputFilePath, output);
     
             console.log(`Processed file saved as ${outputFilePath}`);
