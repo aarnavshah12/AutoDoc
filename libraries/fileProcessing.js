@@ -165,14 +165,14 @@ async function processFileDocument(filePath){
         throw error;
     }
 }
-async function processFileDocumentFolder(filePath) {
+async function processFileDocumentFolder(filePath,DocPath) {
         try {
             const fileContent = await readFile(filePath);
             const output = await Document(fileContent);
             let outputFilePath = filePath.split("/")
             const docName = outputFilePath.pop()
             outputFilePath= outputFilePath.join("/")
-            outputFilePath = outputFilePath + "/docs/" + docName
+            outputFilePath = DocPath+"/" + docName
             outputFilePath = outputFilePath.split(".")[0] + ".md"; // Create a markdown file with the same name
             await writeFile(outputFilePath, output);
     

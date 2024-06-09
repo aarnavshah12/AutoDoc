@@ -78,7 +78,7 @@ function activate(context) {
                     }
                   });
                 for(let i = 0; i<len;i++){
-                    await fileProcessing.processFileDocumentFolder(files[i]);
+                    await fileProcessing.processFileDocumentFolder(files[i],dirRef);
 
                 }
                 vscode.window.showInformationMessage('File has been Documented successfully!');
