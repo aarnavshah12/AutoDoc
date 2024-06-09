@@ -39,8 +39,6 @@ function activate(context) {
             vscode.window.showInformationMessage('No active editor found!');
         }
     })
-    // const CommentCodeBase = vscode.commands.registerCommand("autodoc.CommentCodeBase")
-    // context.subscriptions.push();
     const CommentCodeBase = vscode.commands.registerCommand("autodoc.CommentCurrDir",async function(){
         const editor = vscode.window.activeTextEditor;
         if(editor) {
