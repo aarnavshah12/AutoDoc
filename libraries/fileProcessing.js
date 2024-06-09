@@ -33,11 +33,14 @@ async function getDir(Path){
 async function getFiles(dirPath){
     const files = [];
     const directoryContents = fs.readdirSync(dirPath);
-
+    const Index = directoryContents.indexOf("node_modules") 
+    if (Index <= 0){
+        directoryContents.splice(Index)
+    }
     for (const item of directoryContents) {
       const itemPath = path.join(dirPath, item);
       const fileType = itemPath.split(".")[1]
-      if (fs.statSync(itemPath).isDirectory() && fileType !== "png" && fileType !== "jpg" && fileType !== "jpeg" && fileType !== "gitignore") {
+      if (fs.statSync(itemPath).isDirectory() && fileType !== "png" && fileType !== "jpg" && fileType !== "jpeg" && fileType !== "gitignore" && fileType !== "json" && fileType !== "md" && fileType !== "mjs" && fileType !== "vscodeignore") {
         files.push(... await getFiles(itemPath)); // Recursively call for subdirectories
       } else {
         files.push(itemPath); // Add file paths to the results
@@ -47,6 +50,7 @@ async function getFiles(dirPath){
     console.log(files)
     return files
 }
+
 // Function to write content to a file
 function writeFile(filePath, content) {
     return new Promise((resolve, reject) => {
