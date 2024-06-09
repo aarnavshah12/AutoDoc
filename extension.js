@@ -1,3 +1,6 @@
+
+const fs = require('fs');
+
 const vscode = require('vscode');
 const fileProcessing = require('./libraries/fileProcessing.js');
 
@@ -22,10 +25,6 @@ function activate(context) {
             vscode.window.showInformationMessage('No active editor found!');
         }
     });
-
-    const documentCode = vscode.commands.registerCommand('autodoc.documentCode', function () {
-        vscode.window.showInformationMessage('Documenting code!');
-    });
     const DocumentThisFile = vscode.commands.registerCommand('autodoc.DocumentThisFile', async function () {
         const editor = vscode.window.activeTextEditor;
         if(editor) {
@@ -42,6 +41,26 @@ function activate(context) {
     })
     // const CommentCodeBase = vscode.commands.registerCommand("autodoc.CommentCodeBase")
     // context.subscriptions.push();
+    const CommentCodeBase = vscode.commands.registerCommand("autodoc.CommentCurrDir",async function(){
+        const editor = vscode.window.activeTextEditor;
+        if(editor) {
+            let filePath = editor.document.fileName
+            try {
+                const files = await fileProcessing.getFiles(await fileProcessing.getDir(filePath));
+                const len = files.length
+
+                for(let i = 0; i<len;i++){
+                    await fileProcessing.processFile(files[i]);
+                    
+                    // fileProcessing.writeFile(filePath, response) 
+
+                }}catch (error) {
+                vscode.window.showErrorMessage('Error Documenting the file: ' + error.message);
+            }
+        } else {
+            vscode.window.showInformationMessage('No active editor found!');
+        }
+    })
 }
 
 // This method is called when your extension is deactivated
