@@ -14,10 +14,6 @@
   "contributes": {
     "commands": [
       {
-        "command": "autodoc.documentCode",
-        "title": "AutoDoc: Document Code"
-      },
-      {
         "command": "autodoc.CommentThisFile",
         "title": "AutoDoc: Comment This File"
       },
