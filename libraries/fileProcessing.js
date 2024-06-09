@@ -63,7 +63,7 @@ function writeFile(filePath, content) {
 // Function to send code to ChatGPT and receive the response
 async function getCommentedCode(code, fileType) {
     try {
-        const prompt = `Here is a ${fileType} file. Please add appropriate code comments to it.\n\n${code}`;
+        const prompt = `Here is a ${fileType} file. Please add developer code comments without providing feedback and can you add a comment symbol infront of every generated text.\n\n${code}`;
         const response = await axios.post(
             'https://api.openai.com/v1/chat/completions',
             {
@@ -126,7 +126,7 @@ function extractCode(responseText) {
 
         // Split the code block by newlines and remove the first line
         const codeLines = codeBlock.split('\n');
-        //codeLines.shift(); // Remove the first line
+        codeLines.shift(); // Remove the first line
 
         // Join the remaining lines back into a single string
         return codeLines.join('\n').trim();
