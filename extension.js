@@ -89,6 +89,21 @@ function activate(context) {
             vscode.window.showInformationMessage('No active editor found!');
         }
     })
+    const Analyze = vscode.commands.registerCommand("autodoc.Alalyze",async function(){
+        const editor = vscode.window.activeTextEditor;
+        if(editor) {
+            let filePath = editor.document.fileName
+
+            try {
+                fileProcessing.Analysis(filePath)
+                vscode.window.showInformationMessage('File has been Documented successfully!');
+            } catch (error) {
+                vscode.window.showErrorMessage('Error Documenting the file: ' + error.message);
+            }
+        } else {
+            vscode.window.showInformationMessage('No active editor found!');
+        }
+    })
 }
 
 // This method is called when your extension is deactivated

@@ -89,9 +89,8 @@ async function getCommentedCode(code, fileType) {
 }
 
 
-async function Document(code){
+async function Document(prompt){
     try{
-        const prompt = `Generate a github style documentation in markdown based on: ${code}`
         const response = await axios.post(
             'https://api.openai.com/v1/chat/completions',
             {
@@ -114,6 +113,7 @@ async function Document(code){
         return null
     }
 }
+
 // Function to extract code from the response text
 function extractCode(responseText) {
     // Look for the start and end of the code block
@@ -165,10 +165,23 @@ async function processFileDocument(filePath){
         throw error;
     }
 }
+async function Analysis(filePath){
+    try {
+        
+        const fileContent = await readFile(filePath);
+        const output = await Document(`Generate a developer style analysis of my code and please give me recommendations on how to make it better in a markdown format:\n ${fileContent}`)
+        const outputFilePath = await (filePath.split(".")[0]+"_Analysis.md")
+        await writeFile(outputFilePath, output);
+        console.log(`Processed file saved as ${outputFilePath}`);
+    } catch (error) {
+        console.error('Error processing the file:', error);
+        throw error;
+    }
+}
 async function processFileDocumentFolder(filePath,DocPath) {
         try {
             const fileContent = await readFile(filePath);
-            const output = await Document(fileContent);
+            const output = await Document(`Generate a github style documentation in markdown based on: ${fileContent}`);
             let outputFilePath = filePath.split("/")
             const docName = outputFilePath.pop()
             outputFilePath= outputFilePath.join("/")
@@ -190,4 +203,5 @@ module.exports = {
     getCommentedCode,
     writeFile,
     processFileDocumentFolder,
+    Analysis,
 };

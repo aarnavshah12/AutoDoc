@@ -28,6 +28,10 @@
       {
         "command": "autodoc.DocumentCurrentDir",
         "title": "AutoDoc: Document Current Directory"
+      },
+      {
+        "command": "autodoc.Alalyze",
+        "title": "AutoDoc: Alalyze Current File"
       }
     ]
   },
