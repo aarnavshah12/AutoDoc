@@ -53,9 +53,10 @@ function activate(context) {
                     await fileProcessing.processFile(files[i]);
                     
                     // fileProcessing.writeFile(filePath, response) 
-
-                }}catch (error) {
-                vscode.window.showErrorMessage('Error Documenting the file: ' + error.message);
+                
+                }vscode.window.showInformationMessage('Current Directory Commented!');
+            }catch (error) {
+                vscode.window.showErrorMessage('Error Documenting the Directory: ' + error.message);
             }
         } else {
             vscode.window.showInformationMessage('No active editor found!');
@@ -81,9 +82,9 @@ function activate(context) {
                     await fileProcessing.processFileDocumentFolder(files[i],dirRef);
 
                 }
-                vscode.window.showInformationMessage('File has been Documented successfully!');
+                vscode.window.showInformationMessage('Directory has been Documented successfully!');
             } catch (error) {
-                vscode.window.showErrorMessage('Error Documenting the file: ' + error.message);
+                vscode.window.showErrorMessage('Error Documenting the Directory: ' + error.message);
             }
         } else {
             vscode.window.showInformationMessage('No active editor found!');
@@ -96,9 +97,9 @@ function activate(context) {
 
             try {
                 fileProcessing.Analysis(filePath)
-                vscode.window.showInformationMessage('File has been Documented successfully!');
+                vscode.window.showInformationMessage('File has been analyzed successfully!');
             } catch (error) {
-                vscode.window.showErrorMessage('Error Documenting the file: ' + error.message);
+                vscode.window.showErrorMessage('Error analyzing the file: ' + error.message);
             }
         } else {
             vscode.window.showInformationMessage('No active editor found!');

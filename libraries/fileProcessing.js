@@ -33,10 +33,6 @@ async function getDir(Path){
 async function getFiles(dirPath){
     const files = [];
     const directoryContents = fs.readdirSync(dirPath);
-    const Index = directoryContents.indexOf("node_modules") 
-    if (Index <= 0){
-        directoryContents.splice(Index)
-    }
     for (const item of directoryContents) {
       const itemPath = path.join(dirPath, item);
       const fileType = itemPath.split(".")[1]
