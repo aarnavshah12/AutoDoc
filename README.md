@@ -25,25 +25,7 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-If you encounter any issues or have suggestions, please report them on our GitHub Issues page.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
+If you encounter any issues or have suggestions, please report them on our GitHub Issues page
 
 ## Working with Markdown
 
