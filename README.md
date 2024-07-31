@@ -10,7 +10,8 @@ Customizable Settings: Adjust the style and depth of comments and documentation.
 IDE Integration: Seamlessly integrates with Visual Studio Code for a smooth user experience.
 Support for Multiple Languages: Works with various programming languages including Python, JavaScript, Java, C++, and more.
 
-\!\[feature X\]\(images/feature-x.png\)
+![Screenshot 2024-07-31 003353](https://github.com/user-attachments/assets/29da7009-5565-4ed0-9e68-1c9d7b15744b)
+
 
 ## Requirements
 
