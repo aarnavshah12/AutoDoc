@@ -2,6 +2,8 @@
 
 Welcome to the AI Code Commenter & Documentation Generator for Visual Studio Code! This extension leverages advanced AI to automatically generate meaningful comments and comprehensive documentation for your code, enhancing readability and maintainability.
 
+![AutoDoc logo2](https://github.com/user-attachments/assets/e76f1ade-2da8-48a8-8f88-6030902a8a50)
+
 ## Features
 
 Automatic Code Commenting: The AI analyzes your code and inserts relevant comments.
