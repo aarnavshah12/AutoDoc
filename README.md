@@ -22,6 +22,7 @@ Support for Multiple Languages: Works with various programming languages includi
 This extension contributes the following settings:
 
 * **CTRl + SHIFT + P** - key bind to open up the selection of settings. Then select the command with the scroll wheel that you need to use.
+* **CTRl + SHIFT + V** - key bind to format documentation file into a Github "style"
 
 ## Known Issues
 
